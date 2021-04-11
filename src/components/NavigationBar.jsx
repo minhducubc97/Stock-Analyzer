@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartArea } from "@fortawesome/free-solid-svg-icons";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar } from "react-bootstrap";
 
 class NavigationBar extends Component {
   render() {

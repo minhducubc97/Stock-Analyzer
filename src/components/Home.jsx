@@ -1,8 +1,13 @@
 import React, { Component } from "react";
+import StockChart from "./StockChart";
 
 class Home extends Component {
   render() {
-    return <div>Home</div>;
+    return (
+      <div>
+        <StockChart />
+      </div>
+    );
   }
 }
 

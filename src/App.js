@@ -3,6 +3,7 @@ import "./App.css";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./components/Home";
 import { Container, Row, Col } from "react-bootstrap";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </Router>
   );
 }
