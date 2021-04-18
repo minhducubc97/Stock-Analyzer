@@ -53,8 +53,22 @@ class StockChart extends Component {
       );
     }
 
-    console.log(this.state.chartData.map((point) => point["uClose"]));
-    console.log(this.state.chartData.map((point) => point["date"]));
+    const CustomToolTip = (props) => {
+      const { payload, label } = props;
+      return (
+        <div className="bg-dark text-white m-1 p-1">
+          <p>
+            <strong>Date: </strong>
+            {label}
+          </p>
+          <h4>
+            <strong>Price: </strong>
+            {payload && payload[0] ? payload[0].name + payload[0].value : null}
+          </h4>
+        </div>
+      );
+    };
+
     return (
       <div>
         <ResponsiveContainer width="100%" height={400}>
@@ -73,6 +87,7 @@ class StockChart extends Component {
               stroke="#B15DFF"
             />
             <Tooltip
+              content={<CustomToolTip />}
               separator=""
               offset={-40}
               position={{ y: -15 }}
