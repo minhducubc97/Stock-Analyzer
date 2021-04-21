@@ -80,14 +80,6 @@ class StockChart extends Component {
       return null;
     };
 
-    // const changeRange = (event) => {
-    //   const type = event.target.innerText;
-    //   switch (type) {
-    //     case "1D":
-
-    //   }
-    // }
-
     return (
       <div className="text-white">
         <h1 className="font-title text-center m-4">
