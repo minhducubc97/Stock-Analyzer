@@ -7,11 +7,11 @@ import { Navbar } from "react-bootstrap";
 class NavigationBar extends Component {
   render() {
     return (
-      <Navbar bg="dark" variant="dark">
-        <Link to={"/"} className="navbar-brand">
+      <Navbar className="bg-dark">
+        <Link to={"/"} className="navbar-brand text-white">
           <FontAwesomeIcon icon={faChartArea} />
           &nbsp;&nbsp;
-          <span>Stock Analyzer</span>
+          <span className="font-title">Stock Analyzer</span>
         </Link>
       </Navbar>
     );

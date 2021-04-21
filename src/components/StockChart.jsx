@@ -11,12 +11,16 @@ import {
   Legend,
 } from "recharts";
 import Loading from "./Loading";
+import { Image } from "react-bootstrap";
 
 class StockChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
       chartData: [],
+      companyName: "",
+      companyLogo: "",
+      latestPrice: "",
     };
   }
 
@@ -36,16 +40,21 @@ class StockChart extends Component {
           "&chartInterval=160&types=company,quote,chart,stats,logo,news&token=" +
           API_TOKEN
       )
-      .then((response) => response.data.chart)
-      .then((chartData) => {
+      .then((response) => response.data)
+      .then((data) => {
         this.setState({
-          chartData: chartData,
+          chartData: data.chart,
+          companyName: data.company.companyName,
+          companyLogo: data.logo.url,
+          latestPrice: data.quote.latestPrice,
         });
       });
   };
 
   render() {
-    if (this.state.chartData.length === 0) {
+    const { chartData, companyName, companyLogo, latestPrice } = this.state;
+
+    if (chartData.length === 0) {
       return (
         <div className="text-center">
           <Loading />
@@ -53,26 +62,43 @@ class StockChart extends Component {
       );
     }
 
-    const CustomToolTip = (props) => {
-      const { payload, label } = props;
-      return (
-        <div className="bg-dark text-white m-1 p-1">
-          <p>
-            <strong>Date: </strong>
-            {label}
-          </p>
-          <h4>
-            <strong>Price: </strong>
-            {payload && payload[0] ? payload[0].name + payload[0].value : null}
-          </h4>
-        </div>
-      );
+    const CustomToolTip = ({ active, payload, label }) => {
+      if (active && payload && payload.length) {
+        return (
+          <div className="border border-info bg-white text-dark p-2">
+            <div>
+              <strong>Date: </strong>
+              {label}
+            </div>
+            <div>
+              <strong>Price: </strong>
+              {payload[0].name + payload[0].value}
+            </div>
+          </div>
+        );
+      }
+      return null;
     };
 
+    // const changeRange = (event) => {
+    //   const type = event.target.innerText;
+    //   switch (type) {
+    //     case "1D":
+
+    //   }
+    // }
+
     return (
-      <div>
+      <div className="text-white">
+        <h1 className="font-title text-center m-4">
+          {companyName}&nbsp;
+          <Image className="pb-2" src={companyLogo} width={35} />
+        </h1>
+        <span>
+          <h5>Latest Price: ${latestPrice}</h5>
+        </span>
         <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={this.state.chartData} width={400} height={400}>
+          <LineChart data={chartData} width={400} height={400}>
             <CartesianGrid strokeDasharray="3 3" />
             <YAxis domain={["dataMin", "dataMax"]} hide />
             <XAxis hide dataKey="label" />
@@ -89,8 +115,7 @@ class StockChart extends Component {
             <Tooltip
               content={<CustomToolTip />}
               separator=""
-              offset={-40}
-              position={{ y: -15 }}
+              offset={20}
               isAnimationActive
             />
           </LineChart>
